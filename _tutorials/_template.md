@@ -20,9 +20,9 @@ layout: tutorial
 Escribe aquí tu tutorial en **Markdown**.  
 Puedes incluir bloques de código, por ejemplo:
 
-\`\`\`r
+```r
 library(tidyverse)
-\`\`\`
+```
 
 ## Recursos
 - Enlaces, datasets, etc.

@@ -4,6 +4,9 @@ url: "https://ricardosegovia.github.io"
 baseurl: "/sense_ieb"   # IMPORTANTE para sitio de proyecto
 theme: minima
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 collections:
   tutorials:
     output: true
