@@ -1,0 +1,19 @@
+title: "Tutoriales SENCE-IEB"
+description: "Colección de tutoriales del curso SENCE-IEB"
+url: "https://ricardosegovia.github.io"
+baseurl: "/sense_ieb"   # IMPORTANTE para sitio de proyecto
+theme: minima
+markdown: kramdown
+collections:
+  tutorials:
+    output: true
+    permalink: /tutorials/:title/
+defaults:
+  - scope:
+      path: ""
+      type: tutorials
+    values:
+      layout: tutorial
+      nav: tutorials
+plugins:
+  - jekyll-feed
