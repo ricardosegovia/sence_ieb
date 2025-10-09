@@ -21,7 +21,7 @@ De lo contrario, deriva las secciones desde los tutoriales.
   {% assign items = site.tutorials | where: "section", s | sort: "order" %}
   {% if items.size > 0 %}
   {% assign label = labels[s] | default: s %}
-  ## <a href="{{ '/tutorials/' | append: s | append: '/' | relative_url }}">{{ label }}</a>
+  ## {{ label }}
 
   <ul>
     {%- for t in items -%}
