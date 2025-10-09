@@ -72,3 +72,31 @@ h1, h2, h3 {
 .content .highlight pre.language-r::after { content: "R"; }
 .content .highlight pre.language-python::after { content: "PY"; }
 .content .highlight pre.language-bash::after { content: "SH"; }
+
+/* ==== Copy button in code blocks ==== */
+.content .highlight { position: relative; }
+.content .highlight .copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  cursor: pointer;
+}
+.content .highlight .copy-btn:hover {
+  background: #f3f4f6;
+}
+.content .highlight .copy-btn.copied {
+  background: #e6ffed;
+  border-color: #34d399;
+}
+
+/* Evitar superposición con la etiqueta de lenguaje */
+.content .highlight pre[class*="language-"]::after {
+  left: 8px;
+  right: auto;
+}
