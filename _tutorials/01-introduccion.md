@@ -1,5 +1,5 @@
 ---
-title: "Título del tutorial"
+title: "Introducción"
 summary: "Resumen breve del contenido del tutorial."
 authors: "Nombre(s) autor(es)"
 date: 2025-10-08
@@ -21,7 +21,9 @@ Escribe aquí tu tutorial en **Markdown**.
 Puedes incluir bloques de código, por ejemplo:
 
 ```r
+
 library(tidyverse)
+
 ```
 
 ## Recursos

@@ -253,3 +253,22 @@ h1, h2, h3 {
   cursor: pointer;
 }
 .content .highlighter-rouge > .highlight .copy-btn:hover { background: #f3f4f6; }
+
+/* === Cuadro gris solo en el contenedor Rouge correcto === */
+.content .highlighter-rouge > .highlight {
+  background: #f6f8fa !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 0.85rem 1rem !important;
+  position: relative !important;
+  overflow: auto !important;
+  margin: 1rem 0 !important;
+}
+
+/* Evita el “doble borde” en el <pre> interno */
+.content .highlighter-rouge > .highlight > pre.highlight {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
