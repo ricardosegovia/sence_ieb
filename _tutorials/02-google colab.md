@@ -17,7 +17,6 @@ Google Colab es un entorno en la nube que permite ejecutar código sin instalar 
 2. Inicia sesión con tu cuenta de Google.
 3. Desde el menú **Archivo → Nuevo cuaderno**, crea un nuevo notebook.
 
----
 
 ## 🔹 2. Cambiar el entorno a R
 Por defecto, Colab usa Python, pero puedes cambiarlo fácilmente a R:
@@ -27,7 +26,6 @@ Por defecto, Colab usa Python, pero puedes cambiarlo fácilmente a R:
 2. En el campo **Tipo de motor**, elige **R**  
 3. Guarda los cambios y verás que las celdas ahora ejecutan código R.
 
----
 ## 🔹 3. Guardar y compartir el notebook
 
 1. Usa Archivo → Guardar una copia en Drive para conservar tu notebook.
@@ -36,7 +34,6 @@ Por defecto, Colab usa Python, pero puedes cambiarlo fácilmente a R:
 
 3. Los notebooks se guardan en tu Google Drive, carpeta Colab Notebooks.
 
----
 ## 🔹 4. Consejos útiles
 
 1. Usa Ctrl + M B para insertar una nueva celda de código.
@@ -45,7 +42,6 @@ Por defecto, Colab usa Python, pero puedes cambiarlo fácilmente a R:
 
 3. Los notebooks de R en Colab también permiten insertar gráficos (ggplot2, plotly, etc.) igual que en RStudio.
 
----
 
 ## 🔹 5. Resumen
 
@@ -54,6 +50,6 @@ Por defecto, Colab usa Python, pero puedes cambiarlo fácilmente a R:
 
 ## 🔹 6. Recurso adicional:
 
-1. Guía oficial de Google Colab: https://research.google.com/colaboratory/
-2. Documentación de R en Colab: https://colab.research.google.com/notebooks/r.ipynb
+1. Guía oficial de Google Colab: [https://research.google.com/colaboratory/] (https://research.google.com/colaboratory/)
+2. Documentación de R en Colab: [https://colab.research.google.com/notebooks/r.ipynb](https://colab.research.google.com/notebooks/r.ipynb)
 ---
