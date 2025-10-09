@@ -10,7 +10,7 @@ kramdown:
 collections:
   tutorials:
     output: true
-    permalink: /tutorials/:title/
+    permalink: /tutorials/:name/
 defaults:
   - scope:
       path: ""
