@@ -169,3 +169,48 @@ h1, h2, h3 {
 .content .codebox pre.language-r::after { content: "R"; }
 .content .codebox pre.language-python::after { content: "PY"; }
 .content .codebox pre.language-bash::after { content: "SH"; }
+
+/* ==== Code blocks: contenedor externo con cuadro gris SIEMPRE ==== */
+.content figure.highlight,
+.content div.highlight {
+  background: #f6f8fa !important;   /* gris suave */
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 0.85rem 1rem !important;
+  position: relative !important;
+  overflow: auto !important;
+  margin: 1rem 0 !important;
+}
+
+/* No bordes/fondo en los <pre> internos (evita “doble borde”) */
+.content pre.highlight {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Tipografía del código */
+.content figure.highlight pre,
+.content div.highlight pre {
+  background: transparent;
+  margin: 0;
+}
+
+/* Botón copiar: funciona con o sin .codebox */
+.content figure.highlight .copy-btn,
+.content div.highlight .copy-btn,
+.content .codebox .copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+.content figure.highlight .copy-btn:hover,
+.content div.highlight .copy-btn:hover,
+.content .codebox .copy-btn:hover { background: #f3f4f6; }
