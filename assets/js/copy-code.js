@@ -1,29 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const blocks = document.querySelectorAll('.content div.highlight, .content figure.highlight');
+  // Selecciona posibles contenedores externos de Rouge
+  const blocks = document.querySelectorAll('.content figure.highlight, .content div.highlight');
+
   blocks.forEach(block => {
-    // Evitar insertar duplicado
-    if (block.dataset.copyReady) return;
+    // Si este contenedor tiene un ancestro .highlight, está anidado → omitir
+    if (block.parentElement && block.parentElement.closest('.highlight')) return;
+
+    // No duplicar
+    if (block.dataset.copyReady === '1') return;
     block.dataset.copyReady = '1';
 
-    // Botón
+    // Marcar como contenedor estilizado
+    block.classList.add('codebox');
+
+    // Botón copiar
     const btn = document.createElement('button');
     btn.className = 'copy-btn';
     btn.type = 'button';
     btn.setAttribute('aria-label', 'Copiar código al portapapeles');
     btn.textContent = 'Copiar';
 
-    // Detectar dónde está el texto real del código (sin números de línea)
-    let codeNode = null;
-    const table = block.querySelector('table.rouge-table');
-    if (table) {
-      codeNode = table.querySelector('td.code pre, td.code code, td.code');
-    } else {
-      codeNode = block.querySelector('pre code') || block.querySelector('pre');
-    }
+    // Nodo de código sin numeración (si hay), en orden de preferencia
+    const codeNode =
+      block.querySelector('td.code pre, td.code code, pre code, pre');
 
     const getCode = () => (codeNode ? codeNode.innerText : '');
 
-    // Copiar al portapapeles
     btn.addEventListener('click', async () => {
       const text = getCode();
       try {
@@ -46,10 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           btn.textContent = prev;
           btn.classList.remove('copied');
-        }, 1500);
+        }, 1200);
       } catch (e) {
-        btn.textContent = 'Error :(';
-        setTimeout(() => (btn.textContent = 'Copiar'), 1500);
+        const prev = btn.textContent;
+        btn.textContent = 'Error';
+        setTimeout(() => { btn.textContent = prev; }, 1200);
       }
     });
 

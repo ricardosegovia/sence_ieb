@@ -126,3 +126,46 @@ h1, h2, h3 {
   background: transparent;
   margin: 0;
 }
+
+/* --- Normaliza Rouge interno para evitar bordes/fondos duplicados --- */
+.content .highlight { background: transparent !important; border: 0 !important; padding: 0 !important; }
+.content .highlight pre { background: transparent !important; margin: 0 !important; }
+
+/* --- Estilo SOLO para el contenedor externo marcado por JS --- */
+.content .codebox {
+  background: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  position: relative;
+  overflow: auto;
+  margin: 1rem 0;
+}
+
+/* Botón copiar */
+.content .codebox .copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+.content .codebox .copy-btn:hover { background: #f3f4f6; }
+.content .codebox .copy-btn.copied { background: #e6ffed; border-color: #34d399; }
+
+/* (opcional) mostrar etiqueta con lenguaje si Rouge añade clases language-* */
+.content .codebox pre[class*="language-"]::after {
+  position: absolute;
+  top: 6px; left: 8px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  content: attr(class);
+}
+.content .codebox pre.language-r::after { content: "R"; }
+.content .codebox pre.language-python::after { content: "PY"; }
+.content .codebox pre.language-bash::after { content: "SH"; }
