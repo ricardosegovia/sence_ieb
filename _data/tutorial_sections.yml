@@ -1,0 +1,10 @@
+order:
+  - introduccion
+  - datos
+  - modelado
+  - cambio-climático
+labels:
+  introduccion: "R básico"
+  datos: "Visualización"
+  modelado: "Modelado"
+  cambio-climático: "Biodiversidad"

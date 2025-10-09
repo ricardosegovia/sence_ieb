@@ -3,8 +3,9 @@ title: "Introducción"
 summary: "Resumen breve del contenido del tutorial."
 authors: "Nombre(s) autor(es)"
 date: 2025-10-08
+sectionn: introduccion
 order: 10
-layout: tutorial
+layout: default
 ---
 
 ## Objetivos
