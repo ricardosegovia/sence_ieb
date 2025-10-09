@@ -4,7 +4,7 @@ order:
   - modelado
   - cambio-climático
 labels:
-  introduccion: "R básico"
-  datos: "Visualización"
+  introduccion: "Introducción"
+  datos: "Datos de biodiversidad"
   modelado: "Modelado"
-  cambio-climático: "Biodiversidad"
+  cambio-climático: "Cambio climático"
