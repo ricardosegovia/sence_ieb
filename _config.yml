@@ -1,7 +1,7 @@
 title: "Tutoriales SENCE-IEB"
 description: "Colección de tutoriales del curso SENCE-IEB"
 url: "https://ricardosegovia.github.io"
-baseurl: "/sense_ieb"   # IMPORTANTE para sitio de proyecto
+baseurl: "/sence_ieb"   # IMPORTANTE para sitio de proyecto
 theme: minima
 markdown: kramdown
 kramdown:
