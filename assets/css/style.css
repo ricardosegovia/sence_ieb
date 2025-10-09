@@ -214,3 +214,42 @@ h1, h2, h3 {
 .content figure.highlight .copy-btn:hover,
 .content div.highlight .copy-btn:hover,
 .content .codebox .copy-btn:hover { background: #f3f4f6; }
+
+/* === Cuadro gris robusto para Rouge === */
+/* Aplica al contenedor interno .highlight que está DENTRO del wrapper .highlighter-rouge */
+.content [class^="language-"].highlighter-rouge > .highlight,
+.content .highlighter-rouge > .highlight {
+  background: #f6f8fa !important;     /* gris suave */
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 0.85rem 1rem !important;
+  position: relative !important;       /* para el botón Copiar */
+  overflow: auto !important;
+  margin: 1rem 0 !important;
+}
+
+/* Evita “doble borde/fondo” en el <pre> interior */
+.content [class^="language-"].highlighter-rouge > .highlight > pre.highlight,
+.content .highlighter-rouge > .highlight > pre.highlight {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Tipografía del código */
+.content .highlighter-rouge pre { background: transparent; margin: 0; }
+
+/* Botón Copiar (funciona con o sin numeración de líneas) */
+.content .highlighter-rouge > .highlight .copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+.content .highlighter-rouge > .highlight .copy-btn:hover { background: #f3f4f6; }
