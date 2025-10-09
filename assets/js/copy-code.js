@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const blocks = document.querySelectorAll('.content .highlight');
+  const blocks = document.querySelectorAll('.content div.highlight, .content figure.highlight');
   blocks.forEach(block => {
     // Evitar insertar duplicado
     if (block.dataset.copyReady) return;

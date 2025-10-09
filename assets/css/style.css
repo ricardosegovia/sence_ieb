@@ -100,3 +100,29 @@ h1, h2, h3 {
   left: 8px;
   right: auto;
 }
+
+/* ---- Fix: solo contenedor con estilo, no el <pre> ---- */
+.content div.highlight,
+.content figure.highlight {
+  background: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  position: relative;
+  overflow: auto;
+  margin: 1rem 0;
+}
+
+.content pre.highlight {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Mantener tipografía del código */
+.content div.highlight pre,
+.content figure.highlight pre {
+  background: transparent;
+  margin: 0;
+}
