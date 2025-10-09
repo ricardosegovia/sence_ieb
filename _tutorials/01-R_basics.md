@@ -1,9 +1,9 @@
 ---
 layout: default
-title: "Crear un notebook en Google Colab para R"
-description: "Aprende a configurar y trabajar en un entorno R usando Google Colab sin necesidad de instalar nada en tu computador."
+title: "Básicos de R"
+description: "Recordatorio de los elementos básicos de R."
 section: introduccion
-order: 10
+order: 01
 ---
 
 # Tutorial: Básicos de R — instalar paquetes, cargar librerías y nomenclatura

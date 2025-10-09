@@ -3,7 +3,7 @@ layout: default
 title: "Descarga y limpieza de datos de ocurrencia desde GBIF"
 description: "Flujo de trabajo en R para descargar, combinar y limpiar registros de ocurrencia usando datos de GBIF."
 section: datos
-order: 30
+order: 12
 ---
 
 # Descarga y limpieza de datos de ocurrencia desde GBIF

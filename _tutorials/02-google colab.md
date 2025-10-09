@@ -3,7 +3,7 @@ layout: default
 title: "Crear un notebook en Google Colab para R"
 description: "Aprende a configurar y trabajar en un entorno R usando Google Colab sin necesidad de instalar nada en tu computador."
 section: introduccion
-order: 20
+order: 02
 ---
 
 # Crear un notebook en Google Colab para R

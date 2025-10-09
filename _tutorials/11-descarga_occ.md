@@ -1,9 +1,9 @@
 ---
 layout: default
-title: "Descarga y limpieza de datos de individual"
-description: "Descargar, combinar y limpiar registros de ocurrencia usando datos de GBIF."
+title: "Crear cuenta GBIF y bajar datos"
+description: "Creación de cuenta en GBIF y primera aproximación"
 section: datos
-order: 20
+order: 11
 ---
 
 # Tutorial: Crear una cuenta en GBIF y descargar datos de una especie
@@ -39,7 +39,7 @@ A través de su portal ([www.gbif.org](https://www.gbif.org/)), puedes buscar y 
 ## 🌿 3. Buscar una especie
 
 1. En la barra superior de búsqueda, escribe el nombre científico de la especie:  
-   **Nothofagus pumilio**
+   **Nothofagus pumilio** (o la que prefieras)
 2. Haz clic en el resultado correspondiente.
 3. Se abrirá la **página de la especie**, con información taxonómica, mapa de distribución y enlaces a los registros de ocurrencia.
 
