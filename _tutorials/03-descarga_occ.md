@@ -6,187 +6,106 @@ section: datos
 order: 20
 ---
 
-# Descarga y limpieza de datos de ocurrencia desde GBIF
+# Tutorial: Crear una cuenta en GBIF y descargar datos de una especie
 
-Este tutorial muestra cómo automatizar la descarga de registros de ocurrencia desde **GBIF**, combinarlos y realizar una limpieza básica de coordenadas utilizando el paquete **CoordinateCleaner**.  
-El flujo está diseñado para obtener datos de especies **nativas o endémicas arbóreas de Chile**, recortar el conjunto al territorio continental y eliminar coordenadas erróneas.
+**Objetivo:**  
+Aprender a crear una cuenta en [GBIF.org](https://www.gbif.org/) y descargar datos de ocurrencia de una especie específica, como *Nothofagus pumilio*.
 
 ---
 
-## 🔹 1. Cargar librerías necesarias
+## 🪶 1. ¿Qué es GBIF?
+
+El **Global Biodiversity Information Facility (GBIF)** es una red internacional que proporciona acceso libre y abierto a datos sobre biodiversidad de todo el mundo.  
+A través de su portal ([www.gbif.org](https://www.gbif.org/)), puedes buscar y descargar registros de ocurrencia, listas de especies y conjuntos de datos publicados por museos, herbarios y proyectos científicos.
+
+---
+
+## 🧑‍💻 2. Crear una cuenta en GBIF
+
+1. Entra al sitio web: [https://www.gbif.org/](https://www.gbif.org/)
+2. Haz clic en **"Sign up"** (arriba a la derecha).  
+   ![Botón Sign up](https://www.gbif.org/assets/static/images/screenshots/gbif_signup_button.png)
+3. Completa el formulario:
+   - **Username:** nombre de usuario (sin espacios)
+   - **Email address:** tu correo electrónico
+   - **Password:** contraseña segura
+   - Acepta los términos de uso
+4. Revisa tu correo y confirma tu cuenta haciendo clic en el enlace de verificación.
+
+> ✅ Tener una cuenta te permitirá acceder a funciones avanzadas como descargas de datos y publicación de conjuntos de datos.
+
+---
+
+## 🌿 3. Buscar una especie
+
+1. En la barra superior de búsqueda, escribe el nombre científico de la especie:  
+   **Nothofagus pumilio**
+2. Haz clic en el resultado correspondiente.
+3. Se abrirá la **página de la especie**, con información taxonómica, mapa de distribución y enlaces a los registros de ocurrencia.
+
+![Página de especie](https://www.gbif.org/assets/static/images/screenshots/gbif_species_page.png)
+
+---
+
+## 📥 4. Descargar datos de ocurrencia
+
+1. Dentro de la página de la especie, selecciona la pestaña **“Occurrences”**.  
+2. Puedes aplicar filtros antes de descargar:
+   - País: `Chile`
+   - Tipo de registro: `Preserved specimen`, `Human observation`, etc.
+3. Haz clic en **"Download"** (botón azul en la esquina superior derecha).
+4. Si no has iniciado sesión, GBIF te pedirá acceder con tu cuenta.
+5. Elige el formato de descarga:
+   - **Simple (CSV):** fácil de usar en Excel o R
+   - **Darwin Core Archive (DwC-A):** recomendado para análisis más avanzados
+6. Recibirás un correo con el enlace para descargar el archivo `.zip`.
+
+---
+
+## 📂 5. Usar los datos descargados en R
+
+Puedes importar y explorar los datos usando los paquetes `readr` y `dplyr`:
 
 ```r
-library(readxl)
-library(tidyr)
+library(readr)
 library(dplyr)
-library(rgbif)
-source("R/combina_gbif_data.r")
-library(sf)
-library(rnaturalearth)
-library(CoordinateCleaner)
+
+# Ruta del archivo descargado
+datos <- read_csv("occurrence.csv")
+
+# Revisar las primeras filas
+head(datos)
+
+# Filtrar registros con coordenadas válidas
+datos_filtrados <- datos %>%
+  filter(!is.na(decimalLatitude), !is.na(decimalLongitude))
 ```
 
-> 💡 Asegúrate de que el script `combina_gbif_data.r` contenga la función `unificar_y_combinar_datasets()` que combina los archivos descargados.
+> 💡 Consejo: Si planeas hacer descargas frecuentes o masivas, usa la API de GBIF con el paquete [`rgbif`](https://cran.r-project.org/package=rgbif).
 
 ---
 
-## 🔹 2. Configurar credenciales y cargar el catálogo
+## 🧾 6. Citar los datos
 
-```r
-# user <- "tu.usuario.gbif"      # Reemplaza con tu usuario GBIF
-# pwd  <- "tu.contraseña.gbif"   # Reemplaza con tu contraseña GBIF
-# email <- "tu.correo"
+Cada descarga de GBIF genera una **cita única con DOI**.  
+Inclúyela siempre en tus informes o publicaciones, por ejemplo:
 
-# 1. Cargar el catálogo local de especies
-cat <- read_excel("/ruta/a/Catalogo.xlsx")
-
-# 2. Filtrar especies válidas, determinadas y de hábito arbóreo
-species_list <- cat %>%
-  filter(determined == TRUE) %>%
-  filter(status %in% c("Endémica", "Nativa") | is.na(status)) %>%
-  filter(plant_habit_1 == "Árbol") %>%
-  pull(scientific_name) %>%
-  unique()
-```
+> GBIF.org (09 October 2025) GBIF Occurrence Download  
+> [https://doi.org/10.15468/dl.abcd12](https://doi.org/10.15468/dl.abcd12)
 
 ---
 
-## 🔹 3. Descargar datos de GBIF por especie
+## 🎯 Resumen
 
-```r
-datasets_list <- list()
-
-for (species_name in species_list) {
-  cat("Procesando:", species_name, "\n")
-
-  # Obtener taxonKey
-  taxon_info <- name_backbone(species_name)
-  taxon_key <- taxon_info$usageKey
-
-  # Definir descarga desde GBIF
-  gbif_download <- occ_download(
-    pred("taxonKey", taxon_key),
-    pred("country", "CL"),
-    pred("hasGeospatialIssue", FALSE),
-    pred("hasCoordinate", TRUE),
-    pred("occurrenceStatus", "PRESENT"),
-    pred_gte("year", 2000),
-    user = user, pwd = pwd, email = email,
-    format = "SIMPLE_CSV"
-  )
-
-  # Esperar y descargar resultados
-  occ_download_wait(gbif_download)
-  data_downloaded <- occ_download_get(gbif_download) |> occ_download_import()
-
-  # Almacenar
-  datasets_list[[species_name]] <- data_downloaded
-  cat("Completado:", species_name, "\n")
-}
-```
+| Acción | Resultado |
+|:--|:--|
+| Crear cuenta en GBIF | Acceso a descargas personalizadas |
+| Buscar una especie | Vista taxonómica y mapa interactivo |
+| Descargar ocurrencias | Archivo con coordenadas y metadatos |
+| Analizar en R | Integración con `rgbif`, `dplyr` y `sf` |
 
 ---
 
-## 🔹 4. Combinar y exportar los datos
-
-```r
-# Estandarizar columnas antes de combinar
-datasets_list_clean <- lapply(datasets_list, function(df) {
-  df %>%
-    mutate(
-      catalogNumber = as.character(catalogNumber),
-      institutionCode = as.character(institutionCode)
-    )
-})
-
-# Combinar datasets
-combined_data <- unificar_y_combinar_datasets(datasets_list_clean)
-
-# Exportar
-write.csv(combined_data, "data/combined_gbif_data.csv", row.names = FALSE)
-```
-
----
-
-## 🔹 5. Limpieza y recorte espacial
-
-```r
-combined_data <- read.csv("data/combined_gbif_data.csv") %>%
-  select(
-    scientificName, catalogNumber, institutionCode,
-    decimalLatitude, decimalLongitude, year, month, day
-  ) %>%
-  filter(!is.na(decimalLatitude) & !is.na(decimalLongitude)) %>%
-  distinct()
-
-# Convertir a objeto espacial
-occs_sf <- st_as_sf(combined_data, coords = c("decimalLongitude", "decimalLatitude"), crs = 4326)
-
-# Descargar y recortar capa de Chile
-chile <- ne_countries(scale = "medium", country = "Chile", returnclass = "sf")
-chile_continental <- st_crop(chile, xmin = -76, xmax = -66, ymin = -56, ymax = -17)
-
-# Intersección espacial
-occs_crop <- st_filter(occs_sf, chile_continental)
-
-# Extraer coordenadas de vuelta al data.frame
-occs_crop_df <- occs_crop %>%
-  mutate(
-    decimalLongitude = st_coordinates(geometry)[, 1],
-    decimalLatitude  = st_coordinates(geometry)[, 2]
-  ) %>%
-  st_drop_geometry()
-```
-
----
-
-## 🔹 6. Limpieza de coordenadas con *CoordinateCleaner*
-
-```r
-# Seleccionar columnas mínimas requeridas
-clean_input <- occs_crop_df %>%
-  select(
-    species = scientificName,
-    decimalLatitude,
-    decimalLongitude,
-    year
-  ) %>%
-  mutate(iso_a2 = "CL")
-
-# Aplicar filtros sugeridos por Zizka et al. (2019)
-cc_flags <- clean_coordinates(
-  x = clean_input,
-  lon = "decimalLongitude",
-  lat = "decimalLatitude",
-  species = "species",
-  countries = "iso_a2",
-  tests = c("capitals", "centroids", "equal", "gbif", "institutions",
-            "seas", "zeros", "urban"),
-  value = "flagged"
-)
-
-# Conservar solo los registros válidos
-occs_limpias <- occs_crop_df[cc_flags, ]
-
-# Guardar resultados
-write.csv(occs_limpias, "data/occs_limpias.csv", row.names = FALSE)
-```
-
----
-
-## 🔹 7. Resumen del flujo de trabajo
-
-1. Cargar y filtrar especies válidas desde un catálogo local.  
-2. Descargar registros de ocurrencia desde GBIF usando `rgbif`.  
-3. Combinar y estandarizar los datasets.  
-4. Recortar espacialmente al territorio continental chileno.  
-5. Aplicar controles de calidad geográfica con `CoordinateCleaner`.  
-6. Exportar el conjunto final de datos limpios.
-
----
-
-## 🔹 8. Referencias
-
-- Zizka, A., Silvestro, D., Andermann, T. *et al.* (2019). **CoordinateCleaner: Standardized cleaning of occurrence records from biological collection databases.** *Methods in Ecology and Evolution*, 10, 744–751.  
-- [GBIF API Documentation](https://www.gbif.org/developer/occurrence)  
-- [rgbif R package](https://cran.r-project.org/package=rgbif)
+📘 **Autor:** Ricardo Segovia  
+🧩 **Proyecto:** Curso SENCE-IEB — Gestión y modelamiento de datos de biodiversidad  
+📅 **Actualizado:** Octubre 2025  
