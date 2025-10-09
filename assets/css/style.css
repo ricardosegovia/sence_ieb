@@ -28,3 +28,47 @@ h1, h2, h3 {
 .summary {
   color: #444;
 }
+
+/* ==== Code blocks (Jekyll + Rouge) ==== */
+.content .highlight {
+  background: #f6f8fa;         /* gris suave */
+  border: 1px solid #e5e7eb;    /* borde sutil */
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  overflow: auto;
+  margin: 1rem 0;
+}
+.content .highlight pre {
+  background: transparent;
+  margin: 0;
+}
+
+/* tipografía del código */
+.content pre, .content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* inline code `así` */
+.content p code, .content li code {
+  background: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 0.1rem 0.3rem;
+}
+
+/* (opcional) etiqueta con el lenguaje en la esquina */
+.content .highlight { position: relative; }
+.content .highlight pre[class*="language-"]::after {
+  position: absolute;
+  top: 6px; right: 8px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  content: attr(class);
+}
+/* versiones “bonitas” por lenguaje (sobrescriben el content anterior) */
+.content .highlight pre.language-r::after { content: "R"; }
+.content .highlight pre.language-python::after { content: "PY"; }
+.content .highlight pre.language-bash::after { content: "SH"; }
