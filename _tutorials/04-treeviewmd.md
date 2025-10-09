@@ -3,8 +3,11 @@ layout: default
 title: "Ver las ocurrencia sobre un mapa"
 description: "Aprende a visualizar las ocurrencias que descargaste del GBIF"
 section: introduccion
-order: 20
+order: 03
 ---
+
+
+
 # Tutorial: Visualizar ocurrencias de GBIF sobre un mapa con `treemapview`
 
 **Objetivo:**  
