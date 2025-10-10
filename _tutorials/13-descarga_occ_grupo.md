@@ -3,7 +3,7 @@ layout: default
 title: "Descarga y limpieza de datos de ocurrencia desde GBIF"
 description: "Flujo de trabajo en R para descargar, combinar y limpiar registros de ocurrencia usando datos de GBIF."
 section: datos
-order: 12
+order: 13
 ---
 
 # Descarga y limpieza de datos de ocurrencia desde GBIF
@@ -20,10 +20,10 @@ library(readxl)
 library(tidyr)
 library(dplyr)
 library(rgbif)
-source("R/combina_gbif_data.r")
 library(sf)
 library(rnaturalearth)
 library(CoordinateCleaner)
+source("R/combina_gbif_data.r")
 ```
 
 > 💡 Asegúrate de que el script `combina_gbif_data.r` contenga la función `unificar_y_combinar_datasets()` que combina los archivos descargados.

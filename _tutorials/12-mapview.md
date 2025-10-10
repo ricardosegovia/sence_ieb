@@ -2,8 +2,8 @@
 layout: default
 title: "Ver las ocurrencia sobre un mapa"
 description: "Aprende a visualizar las ocurrencias que descargaste del GBIF"
-section: introduccion
-order: 03
+section: datos
+order: 12
 ---
 
 
