@@ -1,167 +1,111 @@
 ---
 layout: default
-title: "Ver las ocurrencia sobre un mapa"
+title: "Ver las ocurrencias sobre un mapa"
 description: "Aprende a visualizar las ocurrencias que descargaste del GBIF"
 section: datos
 order: 12
 ---
 
-
-
-# Tutorial: Visualizar ocurrencias de GBIF sobre un mapa con `treemapview`
+# Tutorial: Visualizar ocurrencias de GBIF sobre un mapa
 
 **Objetivo:**  
-Aprender a cargar los datos descargados desde GBIF, transformarlos en objetos espaciales y visualizarlos sobre un mapa interactivo con el paquete `treemapview`.
+Cargar los datos filtrados, transformarlos en objetos espaciales y visualizarlos sobre un mapa de **Chile** con tres alternativas.
 
 ---
 
 ## 🧩 1) Preparar el entorno
 
-Instala y carga los paquetes necesarios:
+Instala (si hace falta) y carga los paquetes necesarios:
 
 ```r
-install.packages(c("readr", "dplyr", "sf", "treemapview"))
+install.packages(c("readr", "dplyr", "sf", "rnaturalearth", "rnaturalearthdata", "ggplot2", "mapview"))
 ```
-
-Luego cárgalos:
 
 ```r
 library(readr)
 library(dplyr)
 library(sf)
-library(treemapview)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(ggplot2)
+library(mapview)
 ```
-
-> 💡 `treemapview` es un paquete versátil que combina gráficos de mapa interactivos con funcionalidades de `leaflet`.  
-> Si no se instala correctamente, asegúrate de tener `leaflet` y `sf` instalados.
 
 ---
 
-## 📥 2) Cargar los datos de ocurrencia
+## 📥 2) Leer el archivo ya limpio
 
-Supongamos que descargaste un archivo `occurrence.csv` desde GBIF (ver tutorial anterior).
+> Usamos el archivo **tab-delimited** (`\t`) que preparaste previamente.
 
 ```r
-datos <- read_csv("occurrence.csv")
-
-# Revisar las primeras columnas
-head(datos[, 1:6])
+datos <- read_delim("/content/datos/datos_filtrados.csv", delim = "\t", show_col_types = FALSE)
+head(datos)
 ```
 
-Las columnas más importantes para la visualización son:
+Columnas clave esperadas:
 - `decimalLatitude`
 - `decimalLongitude`
-- `scientificName`
-- `basisOfRecord`
-- `eventDate`
+- (opcional) `scientificName`, `basisOfRecord`, `eventDate`, `datasetName`
 
 ---
 
-## 🧹 3) Filtrar y limpiar los datos
-
-Removemos filas sin coordenadas y con valores extremos (fuera de Chile, por ejemplo):
-
-```r
-datos_filtrados <- datos %>%
-  filter(!is.na(decimalLatitude),
-         !is.na(decimalLongitude),
-         decimalLatitude > -60,
-         decimalLatitude < -17,
-         decimalLongitude > -80,
-         decimalLongitude < -65)
-```
-
----
-
-## 🌍 4) Convertir a objeto espacial (`sf`)
-
-Creamos un objeto espacial para visualizarlo:
+## 🌍 3) Convertir a objeto espacial (`sf`)
 
 ```r
 ocurrencias_sf <- st_as_sf(
-  datos_filtrados,
+  datos,
   coords = c("decimalLongitude", "decimalLatitude"),
-  crs = 4326  # EPSG:4326 = WGS84 (lat/lon)
+  crs = 4326 # WGS84
 )
-```
 
-Comprobamos el resultado:
-
-```r
-ocurrencias_sf
-```
-
----
-
-## 🗺️ 5) Visualizar en un mapa interactivo con `treemapview`
-
-### Mapa básico
-
-```r
-tmap_mode("view")  # modo interactivo
-tm_shape(ocurrencias_sf) +
-  tm_dots(col = "blue", size = 0.05)
-```
-
-### Personalizar el mapa
-
-```r
-tm_shape(ocurrencias_sf) +
-  tm_dots(col = "scientificName", size = 0.07, palette = "Dark2") +
-  tm_basemap("Esri.WorldTopoMap") +
-  tm_view(set.view = c(-71, -38, 5))  # centrar sobre Chile
-```
-
----
-
-## 🧭 6) Opcional: Mapear con capas de referencia
-
-Puedes agregar límites de países o regiones con `rnaturalearth`:
-
-```r
-install.packages("rnaturalearth")
-library(rnaturalearth)
-
+# Capa de Chile
 chile <- ne_countries(country = "Chile", returnclass = "sf")
-
-tm_shape(chile) +
-  tm_polygons(col = "gray90", border.col = "gray60") +
-  tm_shape(ocurrencias_sf) +
-  tm_dots(col = "red", size = 0.07, alpha = 0.6)
 ```
 
 ---
 
-## 🔎 7) Explorar registros individuales
+## 🗺️ 4) Tres alternativas para mapear en Chile
 
-El mapa interactivo permite hacer clic en los puntos para inspeccionar los registros (nombre científico, fecha, fuente).  
-Si el archivo original incluye la columna `datasetName`, puedes mostrarla:
+### Opción 1: Mapa rápido con **base R** (`plot()`)
 
 ```r
-tm_shape(ocurrencias_sf) +
-  tm_dots(
-    col = "basisOfRecord",
-    size = 0.07,
-    popup.vars = c("Nombre científico" = "scientificName",
-                   "Dataset" = "datasetName",
-                   "Fecha" = "eventDate")
-  )
+plot(st_geometry(chile), col = "grey95", border = "grey70", main = "Ocurrencias en Chile (base R)")
+plot(st_geometry(ocurrencias_sf), pch = 16, cex = 0.6, col = "red", add = TRUE)
 ```
+
+> 💡 Sencillo y útil para una vista rápida.
 
 ---
 
-## 🧾 8) Guardar el mapa como archivo HTML
-
-Puedes exportar el mapa interactivo:
+### Opción 2: Mapa “bonito” con **ggplot2**
 
 ```r
-mapa <- tm_shape(ocurrencias_sf) +
-  tm_dots(col = "scientificName", size = 0.05)
-
-tmap_save(mapa, "ocurrencias_interactivas.html")
+ggplot() +
+  geom_sf(data = chile, fill = "grey95", color = "grey70") +
+  geom_sf(data = ocurrencias_sf, size = 0.8, alpha = 0.7) +
+  coord_sf(expand = FALSE) +
+  labs(title = "Ocurrencias en Chile", x = "Longitud", y = "Latitud") +
+  theme_minimal()
 ```
 
-Esto generará un archivo que puedes abrir en cualquier navegador web.
+> 💡 Ideal para informes; fácil de personalizar (títulos, leyendas, facetas).
+
+---
+
+### Opción 3: Mapa **interactivo** con `mapview`
+
+```r
+mapviewOptions(basemaps = c("OpenStreetMap", "Esri.WorldTopoMap", "CartoDB.Positron"))
+
+mapview(chile, alpha.regions = 0.1, layer.name = "Chile") +
+  mapview(
+    ocurrencias_sf,
+    zcol = NULL,                 # color único (puedes usar "scientificName")
+    cex = 2, alpha = 0.7)
+
+```
+
+> 💡 Perfecto para explorar, hacer zoom y consultar atributos con clic.
 
 ---
 
@@ -169,11 +113,11 @@ Esto generará un archivo que puedes abrir en cualquier navegador web.
 
 | Acción | Resultado |
 |:--|:--|
-| Cargar CSV de GBIF | Datos listos para análisis |
-| Limpiar coordenadas | Eliminación de registros inválidos |
-| Convertir a `sf` | Datos espaciales listos para mapear |
-| Visualizar con `treemapview` | Mapa interactivo y personalizable |
-| Exportar como HTML | Mapa reutilizable fuera de R |
+| Leer archivo tab-delimited (`read_delim`) | Datos limpios en R |
+| Convertir a `sf` | Puntos espaciales en WGS84 |
+| Base R | Vista rápida y ligera |
+| ggplot2 | Gráfico de alta calidad para informes |
+| mapview | Mapa interactivo para explorar |
 
 ---
 
