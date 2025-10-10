@@ -71,15 +71,24 @@ library(readr)
 library(dplyr)
 
 # Ruta del archivo descargado
-datos <- read_csv("occurrence.csv")
+# Ruta del archivo descargado
+datos <- read_delim("/content/datos/0005661-251009101135966.csv", delim = "\t")
 
 # Revisar las primeras filas
 head(datos)
 
+```
+
+Elimina datos sin coordenadas y revisa cuántos datos fueron eliminados.
+ 
+```r
 # Filtrar registros con coordenadas válidas
 datos_filtrados <- datos %>%
   filter(!is.na(decimalLatitude), !is.na(decimalLongitude))
+# Revisar cuántos datos fueron eliminados 
+dim(datos); dim(datos_filtrados)
 ```
+
 
 > 💡 Consejo: Si planeas hacer descargas frecuentes o masivas, usa la API de GBIF con el paquete [`rgbif`](https://cran.r-project.org/package=rgbif).
 
