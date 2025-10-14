@@ -50,6 +50,6 @@ Por defecto, Colab usa Python, pero puedes cambiarlo fácilmente a R:
 
 ## 🔹 6. Recurso adicional:
 
-1. Guía oficial de Google Colab: [https://research.google.com/colaboratory/] (https://research.google.com/colaboratory/)
+1. Guía oficial de Google Colab: [https://research.google.com/colaboratory/](https://research.google.com/colaboratory/)
 2. Documentación de R en Colab: [https://colab.research.google.com/notebooks/r.ipynb](https://colab.research.google.com/notebooks/r.ipynb)
 ---
