@@ -88,6 +88,12 @@ datos_filtrados <- datos %>%
 # Revisar cuántos datos fueron eliminados 
 dim(datos); dim(datos_filtrados)
 ```
+Guarda los datos filtrados
+
+```r
+write.csv(datos_filtrados, "datos_filtrados.csv")
+
+```
 
 
 > 💡 Consejo: Si planeas hacer descargas frecuentes o masivas, usa la API de GBIF con el paquete [`rgbif`](https://cran.r-project.org/package=rgbif).
