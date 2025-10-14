@@ -105,3 +105,7 @@ Debe mostrar algo como:
 EPSG: 4326 
 WGS 84
 ```
+
+📘 **Autor:** Eduardo Fuentes
+🧩 **Proyecto:** Curso SENCE-IEB — Gestión y modelamiento de datos de biodiversidad  
+📅 **Actualizado:** Octubre 2025
