@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Descargar y limpiar datos de GBIF para múltiples especies"
-description: "Aprende a descargar datos desde GBIF, combinarlos, limpiar coordenadas y eliminar ocurrencias urbanas"
+description: "Aprende a descargar datos desde GBIF, combinarlos, limpiar coordenadas"
 section: datos
 order: 15
 ---
@@ -38,8 +38,6 @@ library(osmdata)
 library(mapview)
 ```
 
-> 💡 *Recuerda:* los paquetes son conjuntos de funciones que amplían las capacidades de R.
-
 ---
 
 ## 🌱 2) Descargar datos de GBIF para una especie
@@ -73,16 +71,26 @@ occ_download_wait(gbif_download)
 
 data_downloaded <- occ_download_get(gbif_download) |>
   occ_download_import()
+
+##Revisa la tabla descargada
+str(data_downloaded)
+head(as.data.frame(data_downloaded))
 ```
 
 ---
 
 ## 🌿 3) Descargar datos para varias especies
 
+Antes de automatizar la descarga para varias especies, es útil entender qué son los loops (bucles) en R.
+Un loop permite repetir un conjunto de instrucciones varias veces sin tener que escribirlas manualmente para cada elemento.
+Por ejemplo, si quisieras descargar los datos de cinco especies distintas, podrías escribir el mismo código cinco veces… pero con un loop puedes hacerlo de forma automatizada, una vez por cada especie en una lista.
+
+En R, los loops más comunes son for, while y repeat.
+En este caso usaremos un bucle for, que recorre los elementos de una lista (por ejemplo, nombres de especies) y ejecuta el mismo bloque de código para cada uno.
+
 ```r
 arboles_rev <- read.csv("./arboles_chile_revisado.csv")
 
-set.seed(123)
 species_list <- sample(unique(arboles_rev$species), 5)
 species_list
 
@@ -116,10 +124,21 @@ for (species_name in species_list) {
   cat("Completed:", species_name, "\n")
 }
 ```
+## 🧠 4) Vamos a combinar los datos
 
+```r
+datasets_list
+datos_juntos <- rbind(datasets_list)
+```
+Fijate que encontramos un error porque muchas veces las tablas descargadas no son iguales en sus carácteróisitcas
 ---
 
 ## 🧠 4) Crear una función para combinar los datos
+PAra resolver este error, tenemos que estandarizar las columnas de las tablas. Para hacer esto, lo más eficiente crear una función de pegado estandarizado.
+
+En R, una función es un conjunto de instrucciones que se agrupan bajo un mismo nombre para reutilizarlas fácilmente.
+Por ejemplo, en lugar de copiar y pegar varias líneas de código cada vez que queremos combinar archivos, podemos definir una función que haga ese trabajo por nosotros.
+Esto permite mantener el código más limpio, ordenado y reutilizable, además de facilitar la detección de errores.
 
 ```r
 unificar_y_combinar_datasets <- function(lista_df) {
@@ -144,21 +163,28 @@ unificar_y_combinar_datasets <- function(lista_df) {
   bind_rows(lista_df_limpia)
 }
 
-combined_data <- unificar_y_combinar_datasets(datasets_list)
-write.csv(combined_data, "./combined_gbif_data.csv", row.names = FALSE)
+
 ```
+> 💡 *Recuerda:* los paquetes son conjuntos de funciones que amplían las capacidades de R.
 
 ---
 
+## 🗺️ 5) Ahora podemos unir y combinar los datasets para guardarlos como una tabla
+```r
+combined_data <- unificar_y_combinar_datasets(datasets_list)
+write.csv(combined_data, "./combined_gbif_data.csv", row.names = FALSE)
+```
 ## 🗺️ 5) Visualizar ocurrencias en un mapa interactivo
 
 ```r
+#primero convertimos el data.frame creado en un objeto espacial
 ocurrencias_sf <- st_as_sf(
   combined_data,
   coords = c("decimalLongitude", "decimalLatitude"),
   crs = 4326
 )
 
+#Además creamos un polígono para chile
 chile <- ne_countries(country = "Chile", returnclass = "sf")
 
 mapviewOptions(basemaps = c("OpenStreetMap", "Esri.WorldTopoMap", "CartoDB.Positron"))
@@ -170,7 +196,8 @@ mapview(chile, alpha.regions = 0.1, layer.name = "Chile") +
 ---
 
 ## 🧹 6) Limpiar coordenadas con `CoordinateCleaner`
-
+Si observamos los datos, podemos ver que hay ocurrencias que parecen tener errores.
+Estos errores deben ser limpiados.
 ```r
 clean_input <- combined_data %>%
   select(
@@ -213,6 +240,8 @@ mapview(chile, alpha.regions = 0.1, layer.name = "Chile") +
 ---
 
 ## 🏙️ 7) Excluir ocurrencias dentro de áreas urbanas (OpenStreetMap)
+Parece razonable excluir arboles que puedan estar siendo cultivadas dentro de ciudades fuera del rango de distribución de las especies.
+
 
 ```r
 chile_bb <- getbb("Chile")
