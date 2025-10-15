@@ -81,6 +81,8 @@ Creamos una versión del conjunto de datos solo con nombres aceptados:
 ```r
 arboles_revisado <- arboles_tax[arboles_tax$status == "ACCEPTED", ]
 dim(arboles_tax); dim(arboles_revisado)
+##Guardamos la lista de árboles revisada
+write.csv(arboles_revisado, "./arboles_chile_revisado.csv", row.names = FALSE )
 ```
 
 > 💬 En este caso no usamos el signo de exclamación, ya que queremos **mantener** los registros con estado “ACCEPTED”.
