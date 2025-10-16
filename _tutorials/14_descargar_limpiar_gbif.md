@@ -130,10 +130,10 @@ for (species_name in species_list) {
 datasets_list
 datos_juntos <- rbind(datasets_list)
 ```
-Fíjate que encontramos un error porque muchas veces las tablas descargadas no son iguales en sus características. Para resolver este error, tenemos que estandarizar las columnas de las tablas. Para hacer esto, lo más eficiente crear una función de pegado estandarizado.
+Encontramos un error porque muchas veces las tablas descargadas no son iguales en sus características. Para resolver este error, tenemos que estandarizar las columnas de las tablas. Para hacer esto, lo más eficiente crear una función de pegado estandarizado.
 ---
 
-## 🧠 4) Crear una función para combinar los datos
+## 🧠 5) Crear una función para combinar los datos
 
 En R, una función es un conjunto de instrucciones que se agrupan bajo un mismo nombre para reutilizarlas fácilmente.
 Por ejemplo, en lugar de copiar y pegar varias líneas de código cada vez que queremos combinar archivos, podemos definir una función que haga ese trabajo por nosotros.
@@ -168,12 +168,12 @@ unificar_y_combinar_datasets <- function(lista_df) {
 
 ---
 
-## 🗺️ 5) Ahora podemos unir y combinar los datasets para guardarlos como una tabla
+## 🗺️ 6) Ahora podemos unir los datasets para guardarlos como una tabla
 ```r
 combined_data <- unificar_y_combinar_datasets(datasets_list)
 write.csv(combined_data, "./combined_gbif_data.csv", row.names = FALSE)
 ```
-## 🗺️ 5) Visualizar ocurrencias en un mapa interactivo
+## 🗺️ 7) Visualizar ocurrencias en un mapa interactivo
 
 ```r
 #primero convertimos el data.frame creado en un objeto espacial
@@ -194,7 +194,7 @@ mapview(chile, alpha.regions = 0.1, layer.name = "Chile") +
 
 ---
 
-## 🧹 6) Limpiar coordenadas con `CoordinateCleaner`
+## 🧹 8) Limpiar coordenadas con `CoordinateCleaner`
 Si observamos los datos, podemos ver que hay ocurrencias que parecen tener errores.
 Estos errores deben ser limpiados.
 ```r
@@ -238,7 +238,7 @@ mapview(chile, alpha.regions = 0.1, layer.name = "Chile") +
 
 ---
 
-## 🏙️ 7) Excluir ocurrencias dentro de áreas urbanas (OpenStreetMap)
+## 🏙️ 9) Excluir ocurrencias dentro de áreas urbanas (OpenStreetMap)
 Parece razonable excluir arboles que puedan estar siendo cultivadas dentro de ciudades fuera del rango de distribución de las especies.
 
 
@@ -259,7 +259,7 @@ occ_sin_urb <- occs_limpias_sf |> filter(!in_urban)
 
 ---
 
-## 🗺️ 8) Visualizar datos limpios y no urbanos
+## 🗺️ 10) Visualizar datos limpios y no urbanos
 
 ```r
 m_chile <- mapview(
