@@ -130,11 +130,10 @@ for (species_name in species_list) {
 datasets_list
 datos_juntos <- rbind(datasets_list)
 ```
-Fijate que encontramos un error porque muchas veces las tablas descargadas no son iguales en sus carácteróisitcas
+Fíjate que encontramos un error porque muchas veces las tablas descargadas no son iguales en sus características. Para resolver este error, tenemos que estandarizar las columnas de las tablas. Para hacer esto, lo más eficiente crear una función de pegado estandarizado.
 ---
 
 ## 🧠 4) Crear una función para combinar los datos
-PAra resolver este error, tenemos que estandarizar las columnas de las tablas. Para hacer esto, lo más eficiente crear una función de pegado estandarizado.
 
 En R, una función es un conjunto de instrucciones que se agrupan bajo un mismo nombre para reutilizarlas fácilmente.
 Por ejemplo, en lugar de copiar y pegar varias líneas de código cada vez que queremos combinar archivos, podemos definir una función que haga ese trabajo por nosotros.
