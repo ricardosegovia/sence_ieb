@@ -195,8 +195,7 @@ mapview(chile, alpha.regions = 0.1, layer.name = "Chile") +
 ---
 
 ## 🧹 8) Limpiar coordenadas con `CoordinateCleaner`
-Si observamos los datos, podemos ver que hay ocurrencias que parecen tener errores.
-Estos errores deben ser limpiados.
+Si observamos los datos, podemos ver que hay ocurrencias que parecen tener errores. Estos errores deben ser limpiados. Para ello utilizaremos el paquete CoordinateCleaner (Zizka et al., 2019), una herramienta diseñada para detectar y estandarizar registros geográficos erróneos en datos de biodiversidad. Este paquete identifica automáticamente coordenadas sospechosas —como aquellas ubicadas en centros urbanos, museos, océanos o en el punto 0°N 0°E—, ayudando a mejorar la calidad y confiabilidad de los datos antes de su análisis.
 ```r
 clean_input <- combined_data %>%
   select(
@@ -222,16 +221,18 @@ summary(cc_flags)
 
 occs_limpias <- combined_data[cc_flags, ]
 
+
+```
+
+Visualización rápida del nuevo dataset limpio:
+
+```r
 occs_limpias_sf <- st_as_sf(
   occs_limpias,
   coords = c("decimalLongitude", "decimalLatitude"),
   crs = 4326
 )
-```
 
-Visualización rápida:
-
-```r
 mapview(chile, alpha.regions = 0.1, layer.name = "Chile") +
   mapview(occs_limpias_sf, zcol = "species", cex = 5, alpha = 0.7)
 ```
