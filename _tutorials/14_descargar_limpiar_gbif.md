@@ -124,7 +124,7 @@ for (species_name in species_list) {
   cat("Completed:", species_name, "\n")
 }
 ```
-## 🧠 4) Vamos a combinar los datos
+## ⛔ 4) Vamos a combinar los datos
 
 ```r
 datasets_list
@@ -168,7 +168,7 @@ unificar_y_combinar_datasets <- function(lista_df) {
 
 ---
 
-## 🗺️ 6) Ahora podemos unir los datasets para guardarlos como una tabla
+## 💾 6) Ahora podemos unir los datasets para guardarlos como una tabla
 ```r
 combined_data <- unificar_y_combinar_datasets(datasets_list)
 write.csv(combined_data, "./combined_gbif_data.csv", row.names = FALSE)
