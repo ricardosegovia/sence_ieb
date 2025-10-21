@@ -2,7 +2,7 @@
 layout: default
 title: "Cargar un raster y superponer un shapefile"
 description: "Aprende a cargar archivos raster y shapefiles, verificar proyecciones y graficarlos juntos usando el paquete terra."
-section: datos
+section: Análisis espaciales
 order: 32
 ---
 

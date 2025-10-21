@@ -2,7 +2,7 @@
 layout: default
 title: "Cargar Excel o CSV y convertir a proyección EPSG:4326"
 description: "Aprende a cargar datos desde archivos Excel o CSV, y convertirlos a formato espacial con proyección geográfica WGS84 (EPSG:4326)."
-section: datos
+section: Análsis espaciales
 order: 31
 ---
 
