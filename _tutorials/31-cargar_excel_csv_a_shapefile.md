@@ -1,3 +1,11 @@
+---
+layout: default
+title: "Cargar Excel o CSV y convertir a proyección EPSG:4326"
+description: "Aprende a cargar datos desde archivos Excel o CSV, y convertirlos a formato espacial con proyección geográfica WGS84 (EPSG:4326)."
+section: datos
+order: 31
+---
+
 # 📘 Tutorial: Cargar un archivo Excel o CSV y convertirlo a proyección EPSG:4326 (WGS84) en R
 
 Este tutorial muestra cómo cargar datos desde un archivo **Excel (.xlsx)** o **CSV (.csv)** con coordenadas, y luego convertirlos en un objeto espacial con la proyección geográfica **EPSG:4326** utilizando el paquete `sf`.
@@ -123,3 +131,7 @@ st_write(puntos_excel_sf, "shapefiles/puntos_4326.gpkg", delete_layer = TRUE)
 > 📘 **Referencias útiles:**  
 > - Paquete `sf`: [https://r-spatial.github.io/sf/](https://r-spatial.github.io/sf/)  
 > - EPSG codes: [https://epsg.io/](https://epsg.io/)
+
+📘 **Autor:** Eduardo Fuentes-Lillo
+🧩 **Proyecto:** Curso SENCE-IEB — Gestión y modelamiento de datos de biodiversidad  
+📅 **Actualizado:** Octubre 2025

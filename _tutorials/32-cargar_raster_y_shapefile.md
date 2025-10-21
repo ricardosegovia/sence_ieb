@@ -1,3 +1,12 @@
+---
+layout: default
+title: "Cargar un raster y superponer un shapefile"
+description: "Aprende a cargar archivos raster y shapefiles, verificar proyecciones y graficarlos juntos usando el paquete terra."
+section: datos
+order: 32
+---
+
+
 # 🗺️ Tutorial: Cargar un Raster y Plotear un Shapefile en R
 
 En este tutorial aprenderás a cargar un archivo raster (por ejemplo, un mapa de elevación o cobertura) y un shapefile con puntos o polígonos, para visualizarlos juntos en un mismo mapa utilizando el paquete `terra`.
@@ -108,3 +117,7 @@ dev.off()
 > 📘 **Referencias útiles:**  
 > - Paquete `terra`: [https://rspatial.org/terra/](https://rspatial.org/terra/)  
 > - Paquete `sf`: [https://r-spatial.github.io/sf/](https://r-spatial.github.io/sf/)
+
+📘 **Autor:** Eduardo Fuentes-Lillo  
+🧩 **Proyecto:** Curso SENCE-IEB — Gestión y modelamiento de datos de biodiversidad  
+📅 **Actualizado:** Octubre 2025
