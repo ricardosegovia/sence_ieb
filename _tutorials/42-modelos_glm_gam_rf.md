@@ -2,7 +2,7 @@
 layout: default
 title: "Modelamiento de distribución de especies"
 description: "Aprende a realizar modelamiento de distribución de especies (GLM, GAM, RF)"
-section: modelado
+section: SDM
 order: 42
 ---
 

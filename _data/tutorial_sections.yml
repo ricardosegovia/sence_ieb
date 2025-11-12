@@ -2,9 +2,11 @@ order:
   - introduccion
   - datos
   - modelado
+  - SDM
   - cambio-climático
 labels:
   introduccion: "Introducción"
   datos: "Datos de biodiversidad"
   modelado: "Análisis espaciales"
+  SDM: "Modelos de distribución de especies"
   cambio-climático: "Cambio climático"

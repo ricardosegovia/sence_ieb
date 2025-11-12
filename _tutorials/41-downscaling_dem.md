@@ -2,7 +2,7 @@
 layout: default
 title: "Dowscaling estadístico"
 description: "Aprende a realizar un dowscaling estadístico a partir de un DEM a menor resolución"
-section: modelado
+section: SDM
 order: 41
 ---
 
