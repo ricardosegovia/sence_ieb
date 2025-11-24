@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Métodos para Generar Pseudoausencias en Modelamiento de Distribución de Especies"
+title: "Biomod2 actual y futuro"
 description: "Modelamiento de distribución actual y futuro"
 section: cambio-climático
 order: 51
